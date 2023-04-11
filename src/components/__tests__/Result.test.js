@@ -45,7 +45,7 @@ const initState = {
   ],
   stats: [
     {
-      base_stat: 45,
+      base_stat: 48,
       effort: 0,
       stat: {
         name: 'hp',
@@ -53,7 +53,7 @@ const initState = {
       },
     },
     {
-      base_stat: 46,
+      base_stat: 49,
       effort: 0,
       stat: {
         name: 'attack',
@@ -61,7 +61,7 @@ const initState = {
       },
     },
     {
-      base_stat: 47,
+      base_stat: 50,
       effort: 0,
       stat: {
         name: 'defense',
@@ -69,7 +69,7 @@ const initState = {
       },
     },
     {
-      base_stat: 48,
+      base_stat: 78,
       effort: 1,
       stat: {
         name: 'special-attack',
@@ -77,7 +77,7 @@ const initState = {
       },
     },
     {
-      base_stat: 49,
+      base_stat: 79,
       effort: 0,
       stat: {
         name: 'special-defense',
@@ -85,7 +85,7 @@ const initState = {
       },
     },
     {
-      base_stat: 50,
+      base_stat: 80,
       effort: 0,
       stat: {
         name: 'speed',
@@ -96,36 +96,49 @@ const initState = {
 };
 
 describe('Test Result page', () => {
-  beforeEach(() => {
-    render(<Result {...initState} />);
-  });
-
   test('Check name', () => {
+    render(<Result {...initState} />)
     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
   });
 
   test('Check types', () => {
+    render(<Result {...initState} />)
     expect(screen.queryByText('Grass')).toBeInTheDocument();
     expect(screen.queryByText('Poison')).toBeInTheDocument();
     expect(screen.queryByText('Nada')).not.toBeInTheDocument();
   });
 
   test('Check abilities', () => {
+    render(<Result {...initState} />)
     expect(screen.queryByText('Overgrow')).toBeInTheDocument();
     expect(screen.queryByText('Chlorophyll')).toBeInTheDocument();
     expect(screen.queryByText('Nada')).not.toBeInTheDocument();
   });
 
   test('Check stats', () => {
-    expect(screen.queryByText('Overgrow')).toBeInTheDocument();
-    expect(screen.queryByText('Chlorophyll')).toBeInTheDocument();
-    expect(screen.queryByText('Nada')).not.toBeInTheDocument();
+    render(<Result {...initState} />)
+    expect(screen.queryByText('48')).toBeInTheDocument();
+    expect(screen.queryByText('49')).toBeInTheDocument();
+    expect(screen.queryByText('50')).toBeInTheDocument();
+    expect(screen.queryByText('78')).toBeInTheDocument();
+    expect(screen.queryByText('79')).toBeInTheDocument();
+    expect(screen.queryByText('80')).toBeInTheDocument();
+  });
+
+  test('Stats colors', () => {
+    const container = render(<Result {...initState} />);
+    expect(container.queryByText('48').classList.contains('red')).toBe(true)
+    expect(container.queryByText('49').classList.contains('red')).toBe(true)
+    expect(container.queryByText('50').classList.contains('yellow')).toBe(true)
+    expect(container.queryByText('78').classList.contains('yellow')).toBe(true)
+    expect(container.queryByText('79').classList.contains('yellow')).toBe(true)
+    expect(container.queryByText('80').classList.contains('green')).toBe(true)
   });
 });
 
 describe('Test default props on Result page', () => {
   test('Check default type', () => {
-    const newState = Object.assign(initState, {
+    const propsOverride = {
       types: [
         {
           slot: 1,
@@ -135,16 +148,15 @@ describe('Test default props on Result page', () => {
           },
         },
       ],
-    });
-
-    render(<Result {...newState} />);
+    }
+    render(<Result {...initState} {...propsOverride} />)
 
     expect(screen.queryByText('Grass')).toBeInTheDocument();
     expect(screen.queryByText('Nada')).toBeInTheDocument()
   });
 
   test('Check default hability', () => {
-    const newState = Object.assign(initState, {
+    const propsOverride = {
       abilities: [
         {
           ability: {
@@ -155,10 +167,10 @@ describe('Test default props on Result page', () => {
           slot: 1,
         },
       ],
-    });
+    };
 
-    render(<Result {...newState} />);
+    render(<Result {...initState} {...propsOverride} />)
     expect(screen.queryByText('Overgrow')).toBeInTheDocument();
-    expect(screen.queryAllByText('Nada')[1]).toBeInTheDocument();
+    expect(screen.queryByText('Nada')).toBeInTheDocument();
   });
 });
