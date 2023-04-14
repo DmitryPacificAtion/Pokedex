@@ -95,27 +95,27 @@ const initState = {
   ],
 };
 
-describe('Test Result page', () => {
-  test('Check name', () => {
+describe('Result component renders:', () => {
+  test('name', () => {
     render(<Result {...initState} />)
     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
   });
 
-  test('Check types', () => {
+  test('types', () => {
     render(<Result {...initState} />)
     expect(screen.queryByText('Grass')).toBeInTheDocument();
     expect(screen.queryByText('Poison')).toBeInTheDocument();
     expect(screen.queryByText('Nada')).not.toBeInTheDocument();
   });
 
-  test('Check abilities', () => {
+  test('abilities', () => {
     render(<Result {...initState} />)
     expect(screen.queryByText('Overgrow')).toBeInTheDocument();
     expect(screen.queryByText('Chlorophyll')).toBeInTheDocument();
     expect(screen.queryByText('Nada')).not.toBeInTheDocument();
   });
 
-  test('Check stats', () => {
+  test('stats', () => {
     render(<Result {...initState} />)
     expect(screen.queryByText('48')).toBeInTheDocument();
     expect(screen.queryByText('49')).toBeInTheDocument();
@@ -125,7 +125,7 @@ describe('Test Result page', () => {
     expect(screen.queryByText('80')).toBeInTheDocument();
   });
 
-  test('Stats colors', () => {
+  test('stats colors', () => {
     const container = render(<Result {...initState} />);
     expect(container.queryByText('48').classList.contains('red')).toBe(true)
     expect(container.queryByText('49').classList.contains('red')).toBe(true)
@@ -136,8 +136,8 @@ describe('Test Result page', () => {
   });
 });
 
-describe('Test default props on Result page', () => {
-  test('Check default type', () => {
+describe('Result\'s default props are:', () => {
+  test('type', () => {
     const propsOverride = {
       types: [
         {
@@ -155,7 +155,7 @@ describe('Test default props on Result page', () => {
     expect(screen.queryByText('Nada')).toBeInTheDocument()
   });
 
-  test('Check default hability', () => {
+  test('hability', () => {
     const propsOverride = {
       abilities: [
         {
