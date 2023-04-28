@@ -19,6 +19,7 @@ const Pokemon = () => {
         setLoading(true);
 
         if(data){
+            console.log('data', data);
             setLoading(false);
         }
 
